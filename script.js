@@ -14,13 +14,13 @@ function operate(a, b, operator){
         case '*':
             result = multiply(a, b);
             break;
-        case "/":
+        case '/':
             result = divide(a, b);
             break;
         default:
             console.log('wrong operator');
     }
-    return result
+    return result;
 }
 
 // Operaciones Aritmeticas
