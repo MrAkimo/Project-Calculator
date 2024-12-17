@@ -2,6 +2,12 @@ let numberA
 let numberB
 let operator
 
+// visual
+const displayToCalculate = document.getElementById('to-calculate')
+function addToDisplay(value){
+    displayToCalculate.textContent += value;
+}
+
 function operate(a, b, operator){
     let result
     switch(operator){
