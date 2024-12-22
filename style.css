@@ -88,9 +88,9 @@ p {
     gap: 1vw;
 }
 
-.button {
-    min-width: 8vw;
-    min-height: 5vw;
+.btn {
+    min-width: 7vw;
+    min-height: 4vw;
     background-color: rgb(166, 77, 121);
     font-size: 2rem;
     text-transform: uppercase;
