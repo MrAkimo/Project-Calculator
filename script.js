@@ -1,9 +1,6 @@
-let numberA
-let numberB
-let operator
-
 // visual
-const displayToCalculate = document.getElementById('to-calculate')
+const displayToCalculate = document.getElementById('to-calculate');
+const displayResult = document.getElementById('result');
 // keyboard num btn
 const btn7 = document.getElementById('seven');
 const btn8 = document.getElementById('eight');
@@ -53,12 +50,34 @@ const btnComa = document.getElementById('coma');
 const btnEqual = document.getElementById('equal');
 
 btnMinus.onclick = () => addToDisplay('-');
-btnComa.onclick = () => addToDisplay(',');
-btnEqual.onclick = () => addToDisplay('=');
+btnComa.onclick = () => addToDisplay('.');
+btnEqual.onclick = () => calculate();
 
 
 function addToDisplay(value){
     displayToCalculate.textContent += value;
+}
+
+function addResultDisplay(value) {
+    displayResult.textContent = value;
+}
+
+function calculate() {
+    let operator
+    let numbersA
+    let numbersB
+    arr = displayToCalculate.textContent.split('');
+    function isOperator(value){
+        return value == '/' || value == '-' || value == "x" || value == '+';
+    }
+    opPos = arr.findIndex(isOperator)
+    operator = arr[opPos];
+
+    numbersA = Number(arr.slice(0, opPos).join(''))
+    numbersB = +arr.slice(opPos + 1).join('')
+    console.log(numbersA)
+
+    addResultDisplay(operate(numbersA, numbersB, operator));
 }
 
 function delToDisplay() {
@@ -67,7 +86,8 @@ function delToDisplay() {
 }
 
 function clearDisplay() {
-    displayToCalculate.textContent = ''
+    displayToCalculate.textContent = '';
+    displayResult.textContent = '';
 }
 
 function operate(a, b, operator){
@@ -79,7 +99,7 @@ function operate(a, b, operator){
         case '-':
             result = subtract(a, b);
             break;
-        case '*':
+        case 'x':
             result = multiply(a, b);
             break;
         case '/':
