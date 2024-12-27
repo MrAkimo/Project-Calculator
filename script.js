@@ -1,3 +1,8 @@
+let ans = null;
+let operator = null;
+let numbersA = null;
+
+
 // visual
 const displayToCalculate = document.getElementById('to-calculate');
 const displayResult = document.getElementById('result');
@@ -41,15 +46,15 @@ const btnMultiply = document.getElementById('multiply');
 const btnDivision = document.getElementById('division');
 const btnPlus = document.getElementById('plus');
 
-btnMultiply.onclick = () => addToDisplay('x');
-btnDivision.onclick = () => addToDisplay('/')
-btnPlus.onclick = () => addToDisplay('+');
+btnMultiply.onclick = () => operatorkey('x');
+btnDivision.onclick = () => operatorkey('/')
+btnPlus.onclick = () => operatorkey('+');
 
 const btnMinus = document.getElementById('minus');
 const btnComa = document.getElementById('coma');
 const btnEqual = document.getElementById('equal');
 
-btnMinus.onclick = () => addToDisplay('-');
+btnMinus.onclick = () => operatorkey('-');
 btnComa.onclick = () => addToDisplay('.');
 btnEqual.onclick = () => calculate();
 
@@ -62,22 +67,41 @@ function addResultDisplay(value) {
     displayResult.textContent = value;
 }
 
-function calculate() {
-    let operator
-    let numbersA
-    let numbersB
-    arr = displayToCalculate.textContent.split('');
-    function isOperator(value){
-        return value == '/' || value == '-' || value == "x" || value == '+';
+function operatorkey(value){
+    numbersA = displayToCalculate.textContent.split('');
+    operator = value;
+    if(ans==null){
+        addToDisplay(value);
+    } else {
+        clearDisplay();
+        addToDisplay('Ans ' + value);
     }
-    opPos = arr.findIndex(isOperator)
-    operator = arr[opPos];
 
-    numbersA = Number(arr.slice(0, opPos).join(''))
+}
+
+function calculate() {
+    arr = displayToCalculate.textContent.split('');
+    opPos = arr.findIndex((ar) => ar === operator);
+    console.log(ans)
+
+    if(ans == null){
+        numbersA = Number(arr.slice(0, opPos).join(''))
+    } else {
+        numbersA = ans;
+    }
     numbersB = +arr.slice(opPos + 1).join('')
-    console.log(numbersA)
 
-    addResultDisplay(operate(numbersA, numbersB, operator));
+    if(ans==null){
+        let result = operate(numbersA, numbersB, operator);
+        addResultDisplay(result);
+        ans = result;
+    } else {
+        let result = operate(ans, numbersB, operator)
+        addResultDisplay(result);
+        console.log(result)
+        ans = result;
+    }
+
 }
 
 function delToDisplay() {
@@ -88,6 +112,13 @@ function delToDisplay() {
 function clearDisplay() {
     displayToCalculate.textContent = '';
     displayResult.textContent = '';
+}
+
+function restartCalculator() {
+    clearDisplay()
+    numbersA = null;
+    numbersB = null;
+    ans = null;
 }
 
 function operate(a, b, operator){
