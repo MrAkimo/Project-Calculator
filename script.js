@@ -1,7 +1,7 @@
 let ans = null;
 let operator = null;
 let numbersA = null;
-
+let result = null;
 
 // visual
 const displayToCalculate = document.getElementById('to-calculate');
@@ -40,7 +40,7 @@ const btnDel = document.getElementById('del')
 const btnAc = document.getElementById('ac')
 
 btnDel.onclick = () => delToDisplay();
-btnAc.onclick = () => clearDisplay();
+btnAc.onclick = () => restartCalculator();
 
 const btnMultiply = document.getElementById('multiply');
 const btnDivision = document.getElementById('division');
@@ -74,15 +74,17 @@ function operatorkey(value){
         addToDisplay(value);
     } else {
         clearDisplay();
-        addToDisplay('Ans ' + value);
+        result = null;
+        addToDisplay('Ans ' + ' ' + value);
     }
 
 }
 
 function calculate() {
+    if(!result == '')
+        return
     arr = displayToCalculate.textContent.split('');
     opPos = arr.findIndex((ar) => ar === operator);
-    console.log(ans)
 
     if(ans == null){
         numbersA = Number(arr.slice(0, opPos).join(''))
@@ -91,12 +93,16 @@ function calculate() {
     }
     numbersB = +arr.slice(opPos + 1).join('')
 
+    if(numbersB == 0 && operator == '/'){
+        displayResult.textContent = 'jajajaja';
+        return
+    }
     if(ans==null){
-        let result = operate(numbersA, numbersB, operator);
+        result = operate(numbersA, numbersB, operator);
         addResultDisplay(result);
         ans = result;
     } else {
-        let result = operate(ans, numbersB, operator)
+        result = operate(ans, numbersB, operator)
         addResultDisplay(result);
         console.log(result)
         ans = result;
