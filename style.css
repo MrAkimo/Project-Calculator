@@ -91,10 +91,27 @@ p {
 .btn {
     min-width: 7vw;
     min-height: 4vw;
-    background-color: rgb(166, 77, 121);
     font-size: 2rem;
     text-transform: uppercase;
     color: white;
+}
+
+.operand {
+    background-color: rgb(166, 77, 121);
+}
+
+.operand:active {
+    outline: none;
+    background-color: rgb(182, 102, 142);
+}
+
+.operator {
+    background-color: rgb(155, 37, 86);
+}
+
+.operator:focus {
+    outline: none;
+    background-color: rgb(182, 102, 142);
 }
 
 #del {
