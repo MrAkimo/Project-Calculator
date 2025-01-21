@@ -6,7 +6,6 @@ html {
 }
 
 html, body {
-    height: 100%;
     margin: 0;
 }
 
@@ -28,6 +27,8 @@ body {
     margin-bottom: 5vh;
     border-radius: 5vw;
     justify-content:space-around;
+    min-width: 600px;
+    min-height: 800px;
 }
 
 #container-texts {
@@ -54,7 +55,6 @@ p {
 
 #display {
     width: 100%;
-    height: 20vh;
     background-color: rgb(106, 30, 85);
     padding: 2vh;
     display: flex;
@@ -62,6 +62,8 @@ p {
     justify-content: space-between;
     border-radius: 2vw;
     font-size: 2rem;
+    min-height: 180px;
+    min-width: 500px;
 }
 
 #to-calculate{
@@ -75,7 +77,7 @@ p {
 #keyboard {
     display: grid;
     grid-template-columns: repeat(5, 100px);
-    grid-template-rows: repeat(5, 80px);
+    grid-template-rows: repeat(4, 80px);
     gap: 6px;
 }
 
@@ -83,7 +85,7 @@ p {
     display: flex;
     height: 100%;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 1vw;
 }
 
