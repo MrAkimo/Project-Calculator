@@ -3,6 +3,9 @@ let operator = null;
 let numbersA = null;
 let result = null;
 
+let operandA = null;
+let operandB = null;
+
 // visual
 const displayToCalculate = document.getElementById('to-calculate');
 const displayResult = document.getElementById('result');
@@ -48,7 +51,7 @@ const btnPlus = document.getElementById('plus');
 
 btnMultiply.onclick = () => operatorkey('x');
 btnDivision.onclick = () => operatorkey('/')
-btnPlus.onclick = () => operatorkey('+');
+btnPlus.onclick = () => operatorKeyTest('+');
 
 const btnMinus = document.getElementById('minus');
 const btnComa = document.getElementById('coma');
@@ -56,7 +59,7 @@ const btnEqual = document.getElementById('equal');
 
 btnMinus.onclick = () => operatorkey('-');
 btnComa.onclick = () => addToDisplay('.');
-btnEqual.onclick = () => calculate();
+btnEqual.onclick = () => calculateTest();
 
 
 function addToDisplay(value){
@@ -65,6 +68,77 @@ function addToDisplay(value){
 
 function addResultDisplay(value) {
     displayResult.textContent = value;
+}
+
+function operatorKeyTest(operatorM) {
+    //debugging
+    console.log('firts' + ' ' + operandA);
+    console.log(operandB);
+    console.log(result);
+    console.log(displayResult.textContent)
+
+    if(result !== null && displayToCalculate.textContent == '') {
+        operandA = result;
+        result = null;
+        clearDisplay();
+        console.log('especial')
+        return
+
+    }
+
+    // Si ya hubo un calculo anterior
+    if(result !== null) {
+        operandA = result;
+        operandB = displayToCalculate.textContent;
+        result = operate(parseInt(operandA), parseInt(operandB), operatorM);
+        clearDisplay();
+        addResultDisplay(result);
+        operandA = null;
+        operandB = null;
+
+        //debugging
+        console.log('case a' + ' ' + operandA);
+        console.log(operandB);
+        console.log(result);
+        console.log(displayResult.textContent)
+        return
+    }
+    // no hay operandos guardados
+    if(result == null && operandA == null) {
+        operator = operatorM
+        operandA = displayToCalculate.textContent;
+        clearDisplay();
+        //debugging
+        console.log('case b' + ' ' + operandA);
+        console.log(operandB);
+        console.log(result);
+        return
+    }
+    // Si ya tenemos el operando A pero no el B
+    if(result == null && operandA !== null) {
+        operandB = displayToCalculate.textContent;
+        clearDisplay();
+        result = operate(parseInt(operandA), parseInt(operandB), operatorM);
+        addResultDisplay(result);
+        //debugging
+        console.log('case c' + ' ' + operandA);
+        console.log(operandB);
+        console.log(result);
+        return
+    }
+
+    
+}
+
+function calculateTest() {
+    if(displayToCalculate.textContent == '')
+        return
+    operandB = displayToCalculate.textContent;
+    clearDisplay();
+    result = operate(parseInt(operandA), parseInt(operandB), operator);
+    addResultDisplay(result);
+    operandA = null;
+    operandB = null;
 }
 
 function operatorkey(value){
@@ -116,8 +190,8 @@ function delToDisplay() {
 }
 
 function clearDisplay() {
-    displayToCalculate.textContent = '';
-    displayResult.textContent = '';
+    displayToCalculate.textContent = null;
+    displayResult.textContent = null;
 }
 
 function restartCalculator() {
