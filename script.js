@@ -49,15 +49,15 @@ const btnMultiply = document.getElementById('multiply');
 const btnDivision = document.getElementById('division');
 const btnPlus = document.getElementById('plus');
 
-btnMultiply.onclick = () => operatorkey('x');
-btnDivision.onclick = () => operatorkey('/')
-btnPlus.onclick = () => operatorKeyTest('+');
+btnMultiply.onclick = () => operatorKey('x');
+btnDivision.onclick = () => operatorKey('/');
+btnPlus.onclick = () => operatorKey('+');
 
 const btnMinus = document.getElementById('minus');
 const btnComa = document.getElementById('coma');
 const btnEqual = document.getElementById('equal');
 
-btnMinus.onclick = () => operatorkey('-');
+btnMinus.onclick = () => operatorKey('-');
 btnComa.onclick = () => addToDisplay('.');
 btnEqual.onclick = () => calculateTest();
 
@@ -70,12 +70,23 @@ function addResultDisplay(value) {
     displayResult.textContent = value;
 }
 
-function operatorKeyTest(operatorM) {
+function operatorKey(operatorM) {
+    //Si tenemos un operador y el operando a
+    if(result == null && operandA !== null && operator !== null) {
+        operandB = displayToCalculate.textContent;
+        clearDisplay();
+        result = operate(parseInt(operandA), parseInt(operandB), operator);
+        addResultDisplay(result);
+        return
+    }
+    operator = operatorM;
     //debugging
-    console.log('firts' + ' ' + operandA);
-    console.log(operandB);
-    console.log(result);
-    console.log(displayResult.textContent)
+    console.log('Principio de la F');
+    console.log('operandoA: ' + operandA);
+    console.log('operandoB: ' + operandB);
+    console.log('resultado Guardado: ' + result);
+    console.log('Contenido del display: ' + displayResult.textContent);
+    console.log('');
 
     if(result !== null && displayToCalculate.textContent == '') {
         operandA = result;
@@ -90,40 +101,47 @@ function operatorKeyTest(operatorM) {
     if(result !== null) {
         operandA = result;
         operandB = displayToCalculate.textContent;
-        result = operate(parseInt(operandA), parseInt(operandB), operatorM);
+        result = operate(parseInt(operandA), parseInt(operandB), operator);
         clearDisplay();
         addResultDisplay(result);
         operandA = null;
         operandB = null;
+        operator = null;
 
         //debugging
-        console.log('case a' + ' ' + operandA);
-        console.log(operandB);
+        console.log('Si hubo un calculo anterior');
+        console.log('operandoA: ' + operandA);
+        console.log('operandoB: ' + operandB);
         console.log(result);
         console.log(displayResult.textContent)
+        console.log('');
         return
     }
     // no hay operandos guardados
     if(result == null && operandA == null) {
-        operator = operatorM
         operandA = displayToCalculate.textContent;
         clearDisplay();
         //debugging
-        console.log('case b' + ' ' + operandA);
-        console.log(operandB);
+        console.log('No hay operandos guardados');
+        console.log('operandoA: ' + operandA);
+        console.log('operandoB: ' + operandB);
         console.log(result);
+        console.log('');
         return
     }
     // Si ya tenemos el operando A pero no el B
     if(result == null && operandA !== null) {
         operandB = displayToCalculate.textContent;
         clearDisplay();
-        result = operate(parseInt(operandA), parseInt(operandB), operatorM);
+        result = operate(parseInt(operandA), parseInt(operandB), operator);
         addResultDisplay(result);
+        operator = null;
         //debugging
-        console.log('case c' + ' ' + operandA);
-        console.log(operandB);
+        console.log('Si se tiene el operando A pero no el B');
+        console.log('operandoA: ' + operandA);
+        console.log('operandoB: ' + operandB);
         console.log(result);
+        console.log('');
         return
     }
 
@@ -139,6 +157,7 @@ function calculateTest() {
     addResultDisplay(result);
     operandA = null;
     operandB = null;
+    console.log('Resultado key(=):' + ' ' + result);
 }
 
 function operatorkey(value){
@@ -198,6 +217,9 @@ function restartCalculator() {
     clearDisplay()
     numbersA = null;
     numbersB = null;
+    operandA = null;
+    operandB = null;
+    result = null;
     ans = null;
 }
 
