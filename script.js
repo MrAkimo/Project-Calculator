@@ -56,10 +56,12 @@ btnPlus.onclick = () => operatorKey('+');
 const btnMinus = document.getElementById('minus');
 const btnComa = document.getElementById('coma');
 const btnEqual = document.getElementById('equal');
+const btnSign = document.getElementById('sign');
 
 btnMinus.onclick = () => operatorKey('-');
 btnComa.onclick = () => addToDisplay('.');
 btnEqual.onclick = () => calculateTest();
+btnSign.onclick = () => console.log('signn');
 
 
 function addToDisplay(value){
@@ -150,6 +152,8 @@ function operatorKey(operatorM) {
 
 function calculateTest() {
     if(displayToCalculate.textContent == '')
+        return
+    if(operandA == null && operandB == null)
         return
     operandB = displayToCalculate.textContent;
     clearDisplay();
