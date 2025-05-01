@@ -53,7 +53,7 @@ p {
     margin: 0;
 }
 
-#display {
+#display-container {
     width: 100%;
     background-color: rgb(106, 30, 85);
     padding: 2vh;
@@ -66,11 +66,7 @@ p {
     min-width: 500px;
 }
 
-#to-calculate{
-
-}
-
-#result {
+#display {
     align-self: self-end;
 }
 
