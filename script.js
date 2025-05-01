@@ -6,9 +6,11 @@ let result = null;
 let operandA = null;
 let operandB = null;
 
+let operatorTrigered = false;
+let equalTrigered = false;
+
 // visual
-const displayToCalculate = document.getElementById('to-calculate');
-const displayResult = document.getElementById('result');
+const display = document.getElementById('display');
 // keyboard num btn
 const btn7 = document.getElementById('seven');
 const btn8 = document.getElementById('eight');
@@ -61,107 +63,111 @@ const btnSign = document.getElementById('sign');
 btnMinus.onclick = () => operatorKey('-');
 btnComa.onclick = () => addToDisplay('.');
 btnEqual.onclick = () => calculateTest();
-btnSign.onclick = () => console.log('signn');
+btnSign.onclick = () => changeSign();
 
+
+function changeSign(){
+    displayToCalculate.textContent = displayToCalculate.textContent * - 1;
+}
 
 function addToDisplay(value){
-    displayToCalculate.textContent += value;
+    if(operatorTrigered == true || equalTrigered == true){
+        clearDisplay()
+        operatorTrigered = false;
+        equalTrigered = false;
+    }
+    display.textContent += value;
 }
 
 function addResultDisplay(value) {
-    displayResult.textContent = value;
+    display.textContent = value;
 }
 
 function operatorKey(operatorM) {
-    //Si tenemos un operador y el operando a
-    if(result == null && operandA !== null && operator !== null) {
-        operandB = displayToCalculate.textContent;
-        clearDisplay();
-        result = operate(parseInt(operandA), parseInt(operandB), operator);
-        addResultDisplay(result);
-        return
-    }
-    operator = operatorM;
+    operatorTrigered = true;
     //debugging
     console.log('Principio de la F');
     console.log('operandoA: ' + operandA);
     console.log('operandoB: ' + operandB);
+    console.log('operator: ' + operator);
+
     console.log('resultado Guardado: ' + result);
-    console.log('Contenido del display: ' + displayResult.textContent);
+    console.log('Contenido del display: ' + display.textContent);
     console.log('');
 
-    if(result !== null && displayToCalculate.textContent == '') {
-        operandA = result;
-        result = null;
-        clearDisplay();
-        console.log('especial')
-        return
+    //Caso 1
+    if(operandA == null && operandB == null && operator == null) {
+        operandA = display.textContent;
+        operator = operatorM;
+        //clearDisplay();
+        //debug
+        console.log('Caso 1');
+        console.log('operandoA: ' + operandA);
+        console.log('operandoB: ' + operandB);
+        console.log('operator: ' + operator);
 
+        console.log('resultado Guardado: ' + result);
+        console.log('Contenido del display: ' + display.textContent);
+        console.log('');
+        return
     }
 
-    // Si ya hubo un calculo anterior
-    if(result !== null) {
-        operandA = result;
-        operandB = displayToCalculate.textContent;
-        result = operate(parseInt(operandA), parseInt(operandB), operator);
-        clearDisplay();
+    //Caso 2
+    if(operandA !== null && operandB == null && operator !== null) {
+        //debug
+        console.log('Caso 2A');
+        console.log('operandoA: ' + operandA);
+        console.log('operandoB: ' + operandB);
+        console.log('operator: ' + operator);
+
+        console.log('resultado Guardado: ' + result);
+        console.log('Contenido del display: ' + display.textContent);
+        console.log('');
+
+        operandB = display.textContent;
+        //clearDisplay();
+        result = operate(parseFloat(operandA), parseFloat(operandB), operator);
         addResultDisplay(result);
-        operandA = null;
+        operandA = result;
         operandB = null;
-        operator = null;
+        operator = operatorM;
 
-        //debugging
-        console.log('Si hubo un calculo anterior');
+        //debug
+        console.log('Caso 2F');
         console.log('operandoA: ' + operandA);
         console.log('operandoB: ' + operandB);
-        console.log(result);
-        console.log(displayResult.textContent)
+        console.log('operator: ' + operator);
+
+        console.log('resultado Guardado: ' + result);
+        console.log('Contenido del display: ' + display.textContent);
         console.log('');
-        return
-    }
-    // no hay operandos guardados
-    if(result == null && operandA == null) {
-        operandA = displayToCalculate.textContent;
-        clearDisplay();
-        //debugging
-        console.log('No hay operandos guardados');
-        console.log('operandoA: ' + operandA);
-        console.log('operandoB: ' + operandB);
-        console.log(result);
-        console.log('');
-        return
-    }
-    // Si ya tenemos el operando A pero no el B
-    if(result == null && operandA !== null) {
-        operandB = displayToCalculate.textContent;
-        clearDisplay();
-        result = operate(parseInt(operandA), parseInt(operandB), operator);
-        addResultDisplay(result);
-        operator = null;
-        //debugging
-        console.log('Si se tiene el operando A pero no el B');
-        console.log('operandoA: ' + operandA);
-        console.log('operandoB: ' + operandB);
-        console.log(result);
-        console.log('');
-        return
+
+        result = null;
     }
 
     
 }
 
 function calculateTest() {
-    if(displayToCalculate.textContent == '')
+    if(display.textContent == '')
         return
     if(operandA == null && operandB == null)
         return
-    operandB = displayToCalculate.textContent;
+    operandB = display.textContent;
     clearDisplay();
-    result = operate(parseInt(operandA), parseInt(operandB), operator);
+    result = operate(parseFloat(operandA), parseFloat(operandB), operator);
     addResultDisplay(result);
+
+    numbersA = null;
+    numbersB = null;
     operandA = null;
     operandB = null;
+    operator = null;
+    result = null;
+    ans = null;
+
     console.log('Resultado key(=):' + ' ' + result);
+    equalTrigered = true;
 }
 
 function operatorkey(value){
@@ -180,7 +186,7 @@ function operatorkey(value){
 function calculate() {
     if(!result == '')
         return
-    arr = displayToCalculate.textContent.split('');
+    arr = display.textContent.split('');
     opPos = arr.findIndex((ar) => ar === operator);
 
     if(ans == null){
@@ -208,13 +214,12 @@ function calculate() {
 }
 
 function delToDisplay() {
-    displayText = displayToCalculate.textContent
-    displayToCalculate.textContent = displayText.substring(0, displayText.length - 1);
+    displayText = display.textContent
+    display.textContent = displayText.substring(0, displayText.length - 1);
 }
 
 function clearDisplay() {
-    displayToCalculate.textContent = null;
-    displayResult.textContent = null;
+    display.textContent = null;
 }
 
 function restartCalculator() {
@@ -223,6 +228,7 @@ function restartCalculator() {
     numbersB = null;
     operandA = null;
     operandB = null;
+    operator = null;
     result = null;
     ans = null;
 }
