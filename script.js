@@ -8,6 +8,7 @@ let operandB = null;
 
 let operatorTrigered = false;
 let equalTrigered = false;
+let comaTrigered = false;
 
 // visual
 const display = document.getElementById('display');
@@ -61,13 +62,57 @@ const btnEqual = document.getElementById('equal');
 const btnSign = document.getElementById('sign');
 
 btnMinus.onclick = () => operatorKey('-');
-btnComa.onclick = () => addToDisplay('.');
+btnComa.onclick = () => addComa();
 btnEqual.onclick = () => calculateTest();
 btnSign.onclick = () => changeSign();
 
+document.addEventListener('keyup', event => {
+
+    if(event.key == 1) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 2) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 3) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 4) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 5) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 6) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 7) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 8) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 9) {
+        addToDisplay(event.key);
+    }
+    if(event.key == 0) {
+        addToDisplay(event.key);
+    }
+    if(event.key == ',') {
+        addToDisplay(event.key);
+    }
+
+})
+
+function addComa(){
+    if(comaTrigered == true)
+        return
+    addToDisplay('.');
+    comaTrigered = true;
+}
 
 function changeSign(){
-    displayToCalculate.textContent = displayToCalculate.textContent * - 1;
+    display.textContent = display.textContent * - 1;
 }
 
 function addToDisplay(value){
@@ -85,6 +130,7 @@ function addResultDisplay(value) {
 
 function operatorKey(operatorM) {
     operatorTrigered = true;
+    comaTrigered = false;
     //debugging
     console.log('Principio de la F');
     console.log('operandoA: ' + operandA);
@@ -168,6 +214,7 @@ function calculateTest() {
 
     console.log('Resultado key(=):' + ' ' + result);
     equalTrigered = true;
+    comaTrigered = false;
 }
 
 function operatorkey(value){

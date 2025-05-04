@@ -95,7 +95,8 @@ p {
 }
 
 .sign {
-    background-color: rgb(0, 119, 255);
+    background-color: rgb(189, 111, 172);
+    color: black;
 }
 
 .operand {
