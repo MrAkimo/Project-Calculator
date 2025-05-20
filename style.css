@@ -29,6 +29,8 @@ body {
     justify-content:space-around;
     min-width: 600px;
     min-height: 800px;
+    max-width: 650px;
+    max-height: 900px;
 }
 
 #container-texts {
@@ -86,8 +88,6 @@ p {
 }
 
 .operand, .operator, .sign {
-    min-width: 7vw;
-    min-height: 4vw;
     font-size: 2rem;
     text-transform: uppercase;
     color: white;
