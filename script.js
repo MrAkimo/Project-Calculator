@@ -6,9 +6,9 @@ let result = null;
 let operandA = null;
 let operandB = null;
 
-let operatorTrigered = false;
-let equalTrigered = false;
-let comaTrigered = false;
+let operatorTriggered = false;
+let equalTriggered = false;
+let comaTriggered = false;
 
 // visual
 const display = document.getElementById('display');
@@ -63,7 +63,7 @@ const btnSign = document.getElementById('sign');
 
 btnMinus.onclick = () => operatorKey('-');
 btnComa.onclick = () => addComa();
-btnEqual.onclick = () => calculateTest();
+btnEqual.onclick = () => calculate();
 btnSign.onclick = () => changeSign();
 
 document.addEventListener('keyup', event => {
@@ -105,10 +105,10 @@ document.addEventListener('keyup', event => {
 })
 
 function addComa(){
-    if(comaTrigered == true)
+    if(comaTriggered == true)
         return
     addToDisplay('.');
-    comaTrigered = true;
+    comaTriggered = true;
 }
 
 function changeSign(){
@@ -116,10 +116,10 @@ function changeSign(){
 }
 
 function addToDisplay(value){
-    if(operatorTrigered == true || equalTrigered == true){
+    if(operatorTriggered == true || equalTriggered == true){
         clearDisplay()
-        operatorTrigered = false;
-        equalTrigered = false;
+        operatorTriggered = false;
+        equalTriggered = false;
     }
     display.textContent += value;
 }
@@ -129,24 +129,24 @@ function addResultDisplay(value) {
 }
 
 function operatorKey(operatorM) {
-    operatorTrigered = true;
-    comaTrigered = false;
+    operatorTriggered = true;
+    comaTriggered = false;
     //debugging
-    console.log('Principio de la F');
+    /*console.log('Principio de la F');
     console.log('operandoA: ' + operandA);
     console.log('operandoB: ' + operandB);
     console.log('operator: ' + operator);
 
     console.log('resultado Guardado: ' + result);
     console.log('Contenido del display: ' + display.textContent);
-    console.log('');
+    console.log('');*/
 
     //Caso 1
     if(operandA == null && operandB == null && operator == null) {
         operandA = display.textContent;
         operator = operatorM;
         //clearDisplay();
-        //debug
+        /*debug
         console.log('Caso 1');
         console.log('operandoA: ' + operandA);
         console.log('operandoB: ' + operandB);
@@ -154,13 +154,13 @@ function operatorKey(operatorM) {
 
         console.log('resultado Guardado: ' + result);
         console.log('Contenido del display: ' + display.textContent);
-        console.log('');
+        console.log('');*/
         return
     }
 
     //Caso 2
     if(operandA !== null && operandB == null && operator !== null) {
-        //debug
+        /*debug
         console.log('Caso 2A');
         console.log('operandoA: ' + operandA);
         console.log('operandoB: ' + operandB);
@@ -168,7 +168,7 @@ function operatorKey(operatorM) {
 
         console.log('resultado Guardado: ' + result);
         console.log('Contenido del display: ' + display.textContent);
-        console.log('');
+        console.log('');*/
 
         operandB = display.textContent;
         //clearDisplay();
@@ -178,7 +178,7 @@ function operatorKey(operatorM) {
         operandB = null;
         operator = operatorM;
 
-        //debug
+        /*debug
         console.log('Caso 2F');
         console.log('operandoA: ' + operandA);
         console.log('operandoB: ' + operandB);
@@ -186,7 +186,7 @@ function operatorKey(operatorM) {
 
         console.log('resultado Guardado: ' + result);
         console.log('Contenido del display: ' + display.textContent);
-        console.log('');
+        console.log('');*/
 
         result = null;
     }
@@ -194,7 +194,7 @@ function operatorKey(operatorM) {
     
 }
 
-function calculateTest() {
+function calculate() {
     if(display.textContent == '')
         return
     if(operandA == null && operandB == null)
@@ -205,16 +205,16 @@ function calculateTest() {
     addResultDisplay(result);
 
     numbersA = null;
-    numbersB = null;
+    numbersA = null;
     operandA = null;
     operandB = null;
     operator = null;
     result = null;
     ans = null;
 
-    console.log('Resultado key(=):' + ' ' + result);
-    equalTrigered = true;
-    comaTrigered = false;
+    //console.log('Resultado key(=):' + ' ' + result);
+    equalTriggered = true;
+    comaTriggered = false;
 }
 
 function operatorkey(value){
@@ -226,36 +226,6 @@ function operatorkey(value){
         clearDisplay();
         result = null;
         addToDisplay('Ans ' + ' ' + value);
-    }
-
-}
-
-function calculate() {
-    if(!result == '')
-        return
-    arr = display.textContent.split('');
-    opPos = arr.findIndex((ar) => ar === operator);
-
-    if(ans == null){
-        numbersA = Number(arr.slice(0, opPos).join(''))
-    } else {
-        numbersA = ans;
-    }
-    numbersB = +arr.slice(opPos + 1).join('')
-
-    if(numbersB == 0 && operator == '/'){
-        displayResult.textContent = 'jajajaja';
-        return
-    }
-    if(ans==null){
-        result = operate(numbersA, numbersB, operator);
-        addResultDisplay(result);
-        ans = result;
-    } else {
-        result = operate(ans, numbersB, operator)
-        addResultDisplay(result);
-        console.log(result)
-        ans = result;
     }
 
 }
@@ -272,7 +242,7 @@ function clearDisplay() {
 function restartCalculator() {
     clearDisplay()
     numbersA = null;
-    numbersB = null;
+    numbersA = null;
     operandA = null;
     operandB = null;
     operator = null;
